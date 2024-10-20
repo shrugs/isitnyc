@@ -1,0 +1,39 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  extensions = [postgis]
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+model Neighborhood {
+  id          String   @id
+  name        String
+  description String?
+  geometry    Unsupported("geometry")
+  properties  Json
+  tags        Tag[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+    @@index([geometry], type: Gist)
+
+}
+
+model Tag {
+  id             String       @id @default(uuid())
+  like           Like
+  weight         Int
+  neighborhood   Neighborhood @relation(fields: [neighborhoodId], references: [id])
+  neighborhoodId String
+}
+
+enum Like {
+  Williamsburg
+  CrownHeights
+  // Add other likes as needed
+}
