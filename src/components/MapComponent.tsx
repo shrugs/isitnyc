@@ -4,12 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 
 import { useTheme } from "next-themes";
 import { useMemo, useRef } from "react";
-import {
-	type MapRef,
-	Marker,
-	Map as ReactMap,
-	Source,
-} from "react-map-gl/maplibre";
+import { type MapRef, Marker, Map as ReactMap, Source } from "react-map-gl/maplibre";
 import Pin from "./Pin";
 
 export default function MapComponent({
@@ -34,8 +29,7 @@ export default function MapComponent({
 		[source],
 	);
 
-	const [longitude, latitude] = (source.features[0].geometry as GeoJSON.Point)
-		.coordinates;
+	const [longitude, latitude] = (source.features[0].geometry as GeoJSON.Point).coordinates;
 
 	return (
 		<div className={className}>

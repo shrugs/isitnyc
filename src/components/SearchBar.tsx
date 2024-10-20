@@ -7,13 +7,7 @@ import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 import useSWR from "swr";
 import { useDebounce } from "use-debounce";
-import {
-	Command,
-	CommandEmpty,
-	CommandInput,
-	CommandItem,
-	CommandList,
-} from "./ui/command";
+import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "./ui/command";
 import { Skeleton } from "./ui/skeleton";
 
 export function SearchBar({ className }: { className?: string }) {
@@ -25,8 +19,7 @@ export function SearchBar({ className }: { className?: string }) {
 	const [debouncedQuery] = useDebounce(query, 500);
 
 	const search = useMemo(
-		() =>
-			new SearchBoxCore({ accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN }),
+		() => new SearchBoxCore({ accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN }),
 		[],
 	);
 	const sessionToken = useMemo(() => new SessionToken(), []);
@@ -59,9 +52,7 @@ export function SearchBar({ className }: { className?: string }) {
 			<CommandList className="absolute top-full left-0 right-0 z-10 rounded-xl shadow-xl mt-4">
 				{debouncedQuery.length === 1 && (
 					<CommandEmpty>
-						<span className="text-muted-foreground">
-							Type at least one more character...
-						</span>
+						<span className="text-muted-foreground">Type at least one more character...</span>
 					</CommandEmpty>
 				)}
 
@@ -74,9 +65,7 @@ export function SearchBar({ className }: { className?: string }) {
 
 				{!isLoading && data?.suggestions.length === 0 && (
 					<CommandEmpty>
-						<span className="text-muted-foreground">
-							Nothing found for "{query}"
-						</span>
+						<span className="text-muted-foreground">Nothing found for "{query}"</span>
 					</CommandEmpty>
 				)}
 
@@ -94,9 +83,7 @@ export function SearchBar({ className }: { className?: string }) {
 					>
 						<div className="flex flex-col gap-1">
 							<span className="font-bold text-md">{name}</span>
-							<span className="text-sm text-muted-foreground">
-								{place_formatted}
-							</span>
+							<span className="text-sm text-muted-foreground">{place_formatted}</span>
 						</div>
 					</CommandItem>
 				))}

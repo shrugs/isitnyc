@@ -10,9 +10,7 @@ export function generateStaticParams() {
 	}));
 }
 
-export default async function LikePage({
-	params,
-}: { params: { neighborhood: string } }) {
+export default async function LikePage({ params }: { params: { neighborhood: string } }) {
 	const like = params.neighborhood as Like;
 	if (!Object.values(Like).includes(like)) notFound();
 
@@ -39,9 +37,7 @@ export default async function LikePage({
 						>
 							{neighborhood.name}
 						</Link>
-						{neighborhood.description && (
-							<p className="mt-1 text-sm">{neighborhood.description}</p>
-						)}
+						{neighborhood.description && <p className="mt-1 text-sm">{neighborhood.description}</p>}
 						<ul className="mt-2 list-disc list-inside">
 							{neighborhood.tags.map((tag) => (
 								<li key={tag.id} className="text-sm">
