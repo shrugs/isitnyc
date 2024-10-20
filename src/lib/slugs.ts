@@ -1,7 +1,7 @@
 import type { Neighborhood } from "@prisma/client";
 import slugify from "slugify";
 
-export const neighborhoodSlug = ({
+export const getNeighborhoodSlug = ({
 	id,
 	name,
 }: Pick<Neighborhood, "id" | "name">) =>

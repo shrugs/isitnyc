@@ -1,18 +1,23 @@
+import { cn } from "@/lib/utils";
 import "./globals.css";
 
+import { SearchHeader } from "@/components/SearchHeader";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import localFont from "next/font/local";
+import { Fraunces, Newsreader } from "next/font/google";
 
-const geistSans = localFont({
-	src: "./fonts/GeistVF.woff",
-	variable: "--font-geist-sans",
-	weight: "100 900",
+const fontHeading = Fraunces({
+	variable: "--font-heading",
+	weight: "600",
+	subsets: ["latin"],
+	display: "swap",
 });
-const geistMono = localFont({
-	src: "./fonts/GeistMonoVF.woff",
-	variable: "--font-geist-mono",
-	weight: "100 900",
+
+const fontBody = Newsreader({
+	variable: "--font-body",
+	weight: "400",
+	subsets: ["latin"],
+	display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -28,14 +33,17 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<head />
-			<body className={`${geistSans.variable} ${geistMono.variable}`}>
+			<body className={cn(fontHeading.variable, fontBody.variable)}>
 				<ThemeProvider
 					attribute="class"
 					defaultTheme="system"
 					enableSystem
 					disableTransitionOnChange
 				>
-					{children}
+					<main className="max-w-screen-md mx-auto flex flex-col py-2 px-4 gap-2">
+						<SearchHeader />
+						{children}
+					</main>
 				</ThemeProvider>
 			</body>
 		</html>

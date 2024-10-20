@@ -6,12 +6,10 @@ import { useTheme } from "next-themes";
 import { useMemo, useRef } from "react";
 import {
 	type MapRef,
-	type MapStyle,
 	Marker,
 	Map as ReactMap,
 	Source,
 } from "react-map-gl/maplibre";
-import useSWR from "swr";
 import Pin from "./Pin";
 
 export default function MapComponent({
@@ -20,10 +18,6 @@ export default function MapComponent({
 }: { source: GeoJSON.FeatureCollection; className?: string }) {
 	const { resolvedTheme } = useTheme();
 	const map = useRef<MapRef>(null);
-
-	const { data: mapStyle } = useSWR<MapStyle>(
-		`https://api.protomaps.com/styles/v2/${resolvedTheme}.json?key=${process.env.PUBLIC_PROTOMAPS_API_KEY}`,
-	);
 
 	const markers = useMemo(
 		() =>
@@ -40,12 +34,20 @@ export default function MapComponent({
 		[source],
 	);
 
+	const [longitude, latitude] = (source.features[0].geometry as GeoJSON.Point)
+		.coordinates;
+
 	return (
 		<div className={className}>
 			<ReactMap
 				ref={map}
 				style={{ width: "100%", height: "100%" }}
-				mapStyle={mapStyle}
+				mapStyle={`https://api.protomaps.com/styles/v2/${resolvedTheme}.json?key=${process.env.NEXT_PUBLIC_PROTOMAPS_API_KEY}`}
+				initialViewState={{
+					zoom: 12.5,
+					latitude,
+					longitude,
+				}}
 			>
 				<Source id="neighborhood" type="geojson" data={source}>
 					{markers}

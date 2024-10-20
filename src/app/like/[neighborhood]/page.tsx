@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { neighborhoodSlug } from "@/lib/slugs";
+import { getNeighborhoodSlug } from "@/lib/slugs";
 import { Like } from "@prisma/client";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -34,7 +34,7 @@ export default async function LikePage({
 				{neighborhoods.map((neighborhood) => (
 					<li key={neighborhood.id}>
 						<Link
-							href={`/${neighborhoodSlug(neighborhood)}`}
+							href={`/${getNeighborhoodSlug(neighborhood)}`}
 							className="text-lg font-semibold hover:underline"
 						>
 							{neighborhood.name}

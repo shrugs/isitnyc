@@ -13,15 +13,14 @@ model Neighborhood {
   id          String   @id
   name        String
   description String?
-  geometry    Unsupported("geometry")
+  geometry    Unsupported("geometry(Point, 4326)")?
   properties  Json
   tags        Tag[]
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-    @@index([geometry], type: Gist)
-
+  @@index([geometry], type: Gist)
 }
 
 model Tag {
