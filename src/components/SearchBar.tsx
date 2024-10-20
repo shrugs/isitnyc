@@ -4,7 +4,7 @@ import { getNeighborhoodSlug } from "@/lib/slugs";
 import { cn } from "@/lib/utils";
 import { SearchBoxCore, SessionToken } from "@mapbox/search-js-core";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import useSWR from "swr";
 import { useDebounce } from "use-debounce";
 import {
@@ -18,6 +18,8 @@ import { Skeleton } from "./ui/skeleton";
 
 export function SearchBar({ className }: { className?: string }) {
 	const router = useRouter();
+
+	const input = useRef<HTMLInputElement>(null);
 
 	const [query, setQuery] = useState("");
 	const [debouncedQuery] = useDebounce(query, 500);
@@ -44,8 +46,10 @@ export function SearchBar({ className }: { className?: string }) {
 		<Command
 			shouldFilter={false}
 			className={cn(className, "h-auto w-full", "relative")}
+			// onSelect={(e) => input.current?.blur()}
 		>
 			<CommandInput
+				ref={input}
 				value={query}
 				onValueChange={setQuery}
 				placeholder="Search for any neighborhood"

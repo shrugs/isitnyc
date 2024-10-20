@@ -4,7 +4,7 @@ import "./globals.css";
 import { SearchHeader } from "@/components/SearchHeader";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Fraunces, Newsreader } from "next/font/google";
+import { Fraunces, Source_Serif_4 } from "next/font/google";
 
 const fontHeading = Fraunces({
 	variable: "--font-heading",
@@ -13,7 +13,7 @@ const fontHeading = Fraunces({
 	display: "swap",
 });
 
-const fontBody = Newsreader({
+const fontBody = Source_Serif_4({
 	variable: "--font-body",
 	weight: "400",
 	subsets: ["latin"],
