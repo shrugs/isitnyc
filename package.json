@@ -9,7 +9,8 @@
 		"lint": "next lint",
 		"prisma:pull": "dotenv -e .env.local -- bunx prisma db pull",
 		"prisma:migrate:dev": "dotenv -e .env.local -- bunx prisma migrate dev",
-		"prisma:generate": "dotenv -e .env.local -- bunx prisma generate"
+		"prisma:generate": "dotenv -e .env.local -- bunx prisma generate",
+		"postinstall": "bun run prisma:generate"
 	},
 	"dependencies": {
 		"@mapbox/search-js-core": "^1.0.0-beta.22",
