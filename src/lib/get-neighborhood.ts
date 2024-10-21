@@ -17,8 +17,6 @@ export async function getOrRetrieveNeighborhood(
 		fetchGeometry(id),
 	]);
 
-	console.log(neighborhood);
-
 	// leftover session token? shouldn't happen to real users
 	if (neighborhood && geometry && sessionToken) {
 		redirect(`/${getNeighborhoodSlug(neighborhood)}`);
@@ -39,8 +37,6 @@ export async function getOrRetrieveNeighborhood(
 	const result = await search.retrieve({ mapbox_id: id } as SearchBoxSuggestion, {
 		sessionToken: new SessionToken(sessionToken),
 	});
-
-	console.log(result.features?.[0].properties);
 
 	const feature = result.features?.[0];
 	if (!feature) throw new Error(`Could not find mapbox_id ${id}`);

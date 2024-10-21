@@ -9,7 +9,7 @@
 		"lint": "next lint",
 		"prisma:pull": "dotenv -e .env.local -- bunx prisma db pull",
 		"prisma:migrate:dev": "dotenv -e .env.local -- bunx prisma migrate dev",
-		"prisma:generate": "dotenv -e .env.local -- bunx prisma generate",
+		"prisma:generate": "dotenv -e .env.local -- bunx prisma generate --no-hints",
 		"postinstall": "bun run prisma:generate"
 	},
 	"dependencies": {
@@ -34,7 +34,8 @@
 		"swr": "^2.2.5",
 		"tailwind-merge": "^2.5.4",
 		"tailwindcss-animate": "^1.0.7",
-		"use-debounce": "^10.0.4"
+		"use-debounce": "^10.0.4",
+		"usehooks-ts": "^3.1.0"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
