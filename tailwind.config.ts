@@ -56,8 +56,24 @@ const config: Config = {
 				md: "calc(var(--radius) - 2px)",
 				sm: "calc(var(--radius) - 4px)",
 			},
+			keyframes: {
+				"fade-in": {
+					"0%": { opacity: "0" },
+					"100%": { opacity: "1" },
+				},
+			},
+			animation: {
+				"fade-in": "fade-in 1s ease-out",
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						maxWidth: "100%",
+					},
+				},
+			},
 		},
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 };
 export default config;

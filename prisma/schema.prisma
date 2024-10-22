@@ -52,7 +52,7 @@ enum Like {
   HellsKitchen
   Chinatown
   LittleItaly
-  fiDi
+  FinancialDistrict
   WestVillage
   AlphabetCity
   MeatpackingDistrict
@@ -107,4 +107,5 @@ enum Like {
   BrooklynNavyYard
   DowntownBrooklyn
   ProspectLeffertsGardens
+  Midtown
 }

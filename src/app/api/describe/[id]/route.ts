@@ -5,7 +5,7 @@ import { formatStreamPart, streamText } from "ai";
 import { notFound } from "next/navigation";
 
 const DESCRIBE_ANY_PROMPT = `
-The user will give you a location from somewhere in the world. Describe this location's vibes exclusively with reference to New York City neighborhoods that the user may be familiar with. Return anywhere up to 3 sentences about the location. Don't say anything about New Yorkers themselves. If you don't know anything about the provided location, respond with "{location} seems to be entirely unique".
+The user will give you a location from somewhere in the world. Describe this location's vibes exclusively with reference to New York City neighborhoods that the user may be familiar with. Return anywhere up to 3 sentences about the location. Don't say anything about New Yorkers themselves. If you don't know anything about the provided location, respond with "{location} seems to be entirely unique". Bold all neighborhood names with ** markdown.
 
 For reference, here is a list of NYC neighborhoods: ${Object.values(NYC_NEIGHBORHOODS)
 	.map((n) => n.name)
@@ -31,7 +31,7 @@ export async function POST(req: Request, { params: { id } }: { params: { id: str
 	const fullAddress = (neighborhood.properties as { full_address: string })?.full_address;
 
 	const result = await streamText({
-		model: anthropic("claude-3-sonnet-20240229"),
+		model: anthropic("claude-3-5-sonnet-20240620"),
 		messages: [
 			{
 				role: "system",
