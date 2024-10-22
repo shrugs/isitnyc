@@ -5,7 +5,7 @@ import { formatStreamPart, streamText } from "ai";
 import { notFound } from "next/navigation";
 
 const DESCRIBE_ANY_PROMPT = `
-The user will give you a location from somewhere in the world. Describe this location's vibes exclusively with reference to New York City neighborhoods that the user may be familiar with. Return anywhere up to 3 sentences about the location. Don't say anything about New Yorkers themselves. If you don't know anything about the provided location, respond with "{location} seems to be entirely unique". Bold all neighborhood names with ** markdown.
+The user will give you a location from somewhere in the world. Describe this location's vibes exclusively with reference to New York City neighborhoods that the user may be familiar with. Return anywhere up to 3 sentences about the location. Don't say anything about New Yorkers themselves. Say that a neighborhood _is_, not that it 'gives off vibes of'. If you don't know anything about the provided location, respond with "{location} seems to be entirely unique". Bold all neighborhood names with ** markdown.
 
 For reference, here is a list of NYC neighborhoods: ${Object.values(NYC_NEIGHBORHOODS)
 	.map((n) => n.name)
@@ -40,10 +40,13 @@ export async function POST(req: Request, { params: { id } }: { params: { id: str
 			{ role: "user", content: fullAddress },
 		],
 		async onFinish({ text, finishReason, usage }) {
-			await prisma.neighborhood.update({
-				where: { id },
-				data: { description: text },
-			});
+			// cache if valid stop
+			if (finishReason === "stop" && text) {
+				await prisma.neighborhood.update({
+					where: { id },
+					data: { description: text },
+				});
+			}
 		},
 	});
 

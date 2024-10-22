@@ -28,6 +28,8 @@ export function LocationDescription({ id, initialData }: { id: string; initialDa
 		<div className="flex flex-col gap-1 w-full">
 			<ReactMarkdown className="text-lg prose">{text}</ReactMarkdown>
 
+			{!text && isLoading && <LocationDescriptionSkeleton />}
+
 			{text && !isLoading && (
 				<p className="text-xs text-muted-foreground animate-fade-in self-end">
 					Description courtesy of Claude 3.5 Sonnet

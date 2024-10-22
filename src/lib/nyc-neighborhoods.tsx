@@ -14,13 +14,13 @@ export const NYC_NEIGHBORHOODS = {
 	[Like.EastWilliamsburg]: {
 		like: Like.EastWilliamsburg,
 		name: "East Williamsburg",
-		id: "",
+		id: "dXJuOm1ieHBsYzpDeXZNN0E",
 		description: "Industrial, up-and-coming, artistic, diverse, warehouse parties",
 	},
 	[Like.CrownHeights]: {
 		like: Like.CrownHeights,
 		name: "Crown Heights",
-		id: "",
+		id: "dXJuOm1ieHBsYzpDT3hzN0E",
 		description: "Cultural diversity, Caribbean influence, historic brownstones, gentrifying",
 	},
 	[Like.GreenwichVillage]: {
