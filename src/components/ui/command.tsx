@@ -42,7 +42,7 @@ const CommandInput = React.forwardRef<
 		className="flex items-center border-b bg-popover px-3 shadow-xl rounded-full"
 		cmdk-input-wrapper=""
 	>
-		<MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+		<MagnifyingGlassIcon className="mx-2 h-4 w-4 shrink-0 opacity-50" />
 		<CommandPrimitive.Input
 			ref={ref}
 			className={cn(

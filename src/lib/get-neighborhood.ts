@@ -1,3 +1,5 @@
+import "server-only";
+
 import { SearchBoxCore, type SearchBoxSuggestion, SessionToken } from "@mapbox/search-js-core";
 import type { Neighborhood, Tag } from "@prisma/client";
 import { redirect } from "next/navigation";
@@ -17,15 +19,14 @@ export async function getOrRetrieveNeighborhood(
 		fetchGeometry(id),
 	]);
 
-	// leftover session token? shouldn't happen to real users
-	if (neighborhood && geometry && sessionToken) {
-		redirect(`/${getNeighborhoodSlug(neighborhood)}`);
+	if (neighborhood && geometry) {
+		// leftover session token? shouldn't happen to real users
+		if (sessionToken) return redirect(`/${getNeighborhoodSlug(neighborhood)}`);
+
+		return [neighborhood, geometry];
 	}
 
-	if (neighborhood && geometry) return [neighborhood, geometry];
-
 	// if no neighborhood known, attempt an inline fetch
-
 	if (!sessionToken) {
 		throw new Error("Cannot fetch neighborhood without sessionToken");
 	}

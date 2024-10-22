@@ -4,7 +4,13 @@ import "maplibre-gl/dist/maplibre-gl.css";
 
 import { useTheme } from "next-themes";
 import { useMemo, useRef } from "react";
-import { type MapRef, Marker, Map as ReactMap, Source } from "react-map-gl/maplibre";
+import {
+	AttributionControl,
+	type MapRef,
+	Marker,
+	Map as ReactMap,
+	Source,
+} from "react-map-gl/maplibre";
 import Pin from "./Pin";
 
 export default function MapComponent({
@@ -42,10 +48,13 @@ export default function MapComponent({
 					latitude,
 					longitude,
 				}}
+				reuseMaps
+				attributionControl={false}
 			>
 				<Source id="neighborhood" type="geojson" data={source}>
 					{markers}
 				</Source>
+				<AttributionControl compact />
 			</ReactMap>
 		</div>
 	);

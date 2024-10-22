@@ -75,8 +75,9 @@ export function SearchBar({ className }: { className?: string }) {
 				key={mapbox_id}
 				onSelect={() => {
 					router.push(
-						`${getNeighborhoodSlug({ id: mapbox_id, name })}?${new URLSearchParams({ st: sessionToken.toString() })}`,
+						`/${getNeighborhoodSlug({ id: mapbox_id, name })}?${new URLSearchParams({ st: sessionToken.toString() })}`,
 					);
+					setQuery(name);
 					input.current?.blur();
 					setShow(false);
 				}}
@@ -98,6 +99,7 @@ export function SearchBar({ className }: { className?: string }) {
 				onValueChange={setQuery}
 				placeholder="Search for any neighborhood"
 				onFocus={() => setShow(true)}
+				className="text-md h-14"
 				// className="rounded-full shadow-md"
 			/>
 
