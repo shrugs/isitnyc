@@ -1,17 +1,24 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export function useTextStream(api: string, initialData?: string) {
 	const [text, setText] = useState<string | undefined>(initialData);
 	const [error, setError] = useState<undefined | Error>(undefined);
 	const [isLoading, setIsLoading] = useState(false);
+	const abortControllerRef = useRef<AbortController | null>(null);
 
 	const submit = useCallback(async () => {
+		abortControllerRef.current?.abort();
+		abortControllerRef.current = new AbortController();
+
 		try {
 			setText(undefined);
 			setIsLoading(true);
 			setError(undefined);
 
-			const response = await fetch(api, { method: "POST" });
+			const response = await fetch(api, {
+				method: "POST",
+				signal: abortControllerRef.current.signal,
+			});
 
 			if (!response.ok) {
 				throw new Error((await response.text()) ?? "Failed to fetch the response.");
@@ -36,6 +43,8 @@ export function useTextStream(api: string, initialData?: string) {
 				}),
 			);
 		} catch (error) {
+			if (error instanceof DOMException && error.name === "AbortError") return;
+
 			setIsLoading(false);
 			setError(error instanceof Error ? error : new Error(String(error)));
 		}
@@ -44,6 +53,10 @@ export function useTextStream(api: string, initialData?: string) {
 	useEffect(() => {
 		if (initialData) return;
 		submit();
+
+		return () => {
+			abortControllerRef.current?.abort();
+		};
 	}, [submit, initialData]);
 
 	return { text, isLoading, error };
