@@ -3,7 +3,9 @@
 import { getNeighborhoodSlug } from "@/lib/slugs";
 import { cn } from "@/lib/utils";
 import { SearchBoxCore, SessionToken } from "@mapbox/search-js-core";
-import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 import useSWR from "swr";
 import { useDebounce } from "use-debounce";
@@ -13,11 +15,12 @@ import { Skeleton } from "./ui/skeleton";
 
 export function SearchBar({ className }: { className?: string }) {
 	const router = useRouter();
+	const pathname = usePathname();
 	const input = useRef<HTMLInputElement>(null);
-	const list = useRef<HTMLDivElement>(null);
+	const root = useRef<HTMLDivElement>(null);
 
 	const [show, setShow] = useState(false);
-	useOnClickOutside(list, () => setShow(false));
+	useOnClickOutside(root, () => setShow(false));
 
 	const [query, setQuery] = useState("");
 	const [debouncedQuery] = useDebounce(query, 500);
@@ -92,7 +95,7 @@ export function SearchBar({ className }: { className?: string }) {
 	}, [show, data, isLoading, error, debouncedQuery, router, sessionToken]);
 
 	return (
-		<Command ref={list} shouldFilter={false} className={cn(className, "h-auto w-full", "relative")}>
+		<Command ref={root} shouldFilter={false} className={cn(className, "h-auto w-full", "relative")}>
 			<CommandInput
 				ref={input}
 				value={query}
@@ -100,13 +103,16 @@ export function SearchBar({ className }: { className?: string }) {
 				placeholder="Search for any neighborhood"
 				onFocus={() => setShow(true)}
 				className="text-md h-14"
-				// className="rounded-full shadow-md"
+				icon={
+					pathname === "/" ? undefined : (
+						<Link href="/">
+							<ArrowLeft className="h-4 w-4 shrink-0" />
+						</Link>
+					)
+				}
 			/>
 
-			<CommandList
-				// ref={list}
-				className="absolute top-full left-0 right-0 z-10 rounded-xl shadow-xl mt-4"
-			>
+			<CommandList className="absolute top-full left-0 right-0 z-10 rounded-xl shadow-xl mt-4">
 				{items}
 			</CommandList>
 		</Command>

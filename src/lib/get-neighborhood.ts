@@ -10,11 +10,16 @@ import { getNeighborhoodSlug } from "./slugs";
 export async function getOrRetrieveNeighborhood(
 	id: string,
 	sessionToken?: string,
-): Promise<[Neighborhood & { tags: Tag[] }, GeoJSON.Geometry]> {
+): Promise<
+	[
+		Pick<Neighborhood, "id" | "name" | "description" | "placeFormatted"> & { tags: Tag[] },
+		GeoJSON.Geometry,
+	]
+> {
 	const [neighborhood, geometry] = await Promise.all([
 		prisma.neighborhood.findUnique({
 			where: { id },
-			include: { tags: true },
+			select: { id: true, name: true, description: true, placeFormatted: true, tags: true },
 		}),
 		fetchGeometry(id),
 	]);
@@ -53,6 +58,8 @@ export async function getOrRetrieveNeighborhood(
 			data: {
 				id,
 				name,
+				fullAddress: feature.properties.full_address,
+				placeFormatted: feature.properties.place_formatted,
 				properties: feature.properties as object,
 			},
 			include: { tags: true },

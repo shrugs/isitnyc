@@ -17,7 +17,10 @@ The user will give you a location of a neighborhood in New York City. Describe i
 `;
 
 export async function POST(req: Request, { params: { id } }: { params: { id: string } }) {
-	const neighborhood = await prisma.neighborhood.findUnique({ where: { id } });
+	const neighborhood = await prisma.neighborhood.findUnique({
+		where: { id },
+		select: { id: true, description: true, fullAddress: true },
+	});
 
 	if (!neighborhood) notFound();
 
@@ -28,8 +31,6 @@ export async function POST(req: Request, { params: { id } }: { params: { id: str
 		});
 	}
 
-	const fullAddress = (neighborhood.properties as { full_address: string })?.full_address;
-
 	const result = await streamText({
 		model: anthropic("claude-3-5-sonnet-20240620"),
 		messages: [
@@ -37,7 +38,7 @@ export async function POST(req: Request, { params: { id } }: { params: { id: str
 				role: "system",
 				content: isNYCNeighborhood(neighborhood.id) ? DESCRIBE_NYC_PROMPT : DESCRIBE_ANY_PROMPT,
 			},
-			{ role: "user", content: fullAddress },
+			{ role: "user", content: neighborhood.fullAddress },
 		],
 		async onFinish({ text, finishReason, usage }) {
 			// cache if valid stop

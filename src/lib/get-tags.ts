@@ -77,7 +77,7 @@ async function generateTags(address: string): Promise<SimpleTag[]> {
 export async function getTags(id: string): Promise<SimpleTag[]> {
 	const neighborhood = await prisma.neighborhood.findUnique({
 		where: { id },
-		include: { tags: true },
+		select: { id: true, fullAddress: true, tags: true },
 	});
 
 	if (!neighborhood) notFound();
@@ -99,8 +99,7 @@ export async function getTags(id: string): Promise<SimpleTag[]> {
 
 	// otherwise, fetch from ai
 	try {
-		const fullAddress = (neighborhood.properties as { full_address: string })?.full_address;
-		const tags = await generateTags(fullAddress);
+		const tags = await generateTags(neighborhood.fullAddress);
 
 		// save/cache
 		await prisma.tag.createMany({

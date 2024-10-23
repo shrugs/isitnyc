@@ -33,16 +33,19 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
 		</Dialog>
 	);
 };
-
 const CommandInput = React.forwardRef<
 	React.ElementRef<typeof CommandPrimitive.Input>,
-	React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
->(({ className, ...props }, ref) => (
+	React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input> & {
+		icon?: React.ReactNode;
+	}
+>(({ className, icon = <MagnifyingGlassIcon />, ...props }, ref) => (
 	<div
 		className="flex items-center border-b bg-popover px-3 shadow-xl rounded-full"
 		cmdk-input-wrapper=""
 	>
-		<MagnifyingGlassIcon className="mx-2 h-4 w-4 shrink-0 opacity-50" />
+		{React.cloneElement(icon as React.ReactElement, {
+			className: "mx-2 h-4 w-4 shrink-0",
+		})}
 		<CommandPrimitive.Input
 			ref={ref}
 			className={cn(

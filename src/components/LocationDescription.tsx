@@ -32,7 +32,7 @@ export function LocationDescription({ id, initialData }: { id: string; initialDa
 
 			{text && !isLoading && (
 				<p className="text-xs text-muted-foreground animate-fade-in self-end">
-					Description courtesy of Claude 3.5 Sonnet
+					Tags & description courtesy of Claude 3.5 Sonnet
 				</p>
 			)}
 		</div>

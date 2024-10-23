@@ -33,17 +33,27 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<head />
-			<body className={cn(fontHeading.variable, fontBody.variable)}>
+			<body
+				className={cn(
+					fontHeading.variable,
+					fontBody.variable,
+					"supports-[height:100cqh]:min-h-[100cqh] supports-[height:100svh]:min-h-[100svh]",
+					"flex flex-col gap-4",
+				)}
+			>
 				<ThemeProvider
 					attribute="class"
 					defaultTheme="system"
 					enableSystem
 					disableTransitionOnChange
 				>
-					<main className="max-w-screen-md mx-auto flex flex-col py-2 px-4 gap-2">
+					<main className="flex-1 w-full max-w-screen-md mx-auto flex flex-col py-2 px-4 gap-2">
 						<SearchHeader />
 						{children}
 					</main>
+					<footer className="flex flex-row justify-end items-center p-4 border-t ">
+						<span className="text-muted-foreground">isitbrooklyn.com</span>
+					</footer>
 				</ThemeProvider>
 			</body>
 		</html>
