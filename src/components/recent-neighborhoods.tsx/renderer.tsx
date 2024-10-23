@@ -1,7 +1,7 @@
 "use client";
 
-import type { RecentResponse } from "@/app/api/recent/route";
 import { fetcher } from "@/lib/fetcher";
+import type { RecentResponse } from "@/lib/get-recent-neighborhoods";
 import { getNeighborhoodSlug } from "@/lib/slugs";
 import Link from "next/link";
 import { useEffect, useMemo } from "react";

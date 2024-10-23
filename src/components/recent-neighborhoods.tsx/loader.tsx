@@ -1,5 +1,5 @@
-import { getRecentNeighborhoods } from "@/app/api/recent/route";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getRecentNeighborhoods } from "@/lib/get-recent-neighborhoods";
 import { Suspense } from "react";
 import RenderRecentNeighborhoods from "./renderer";
 
