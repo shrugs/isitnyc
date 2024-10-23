@@ -15,14 +15,13 @@ export default function RenderRecentNeighborhoods({
 }: { fallbackData: RecentResponse }) {
 	const { data, size, setSize, isLoading, error } = useSWRInfinite<RecentResponse>(
 		(pageIndex, previousPageData) => {
-			console.log(pageIndex, previousPageData);
-			// we don't need to fetch first page, it is always provided in fallback
-			if (!previousPageData) return null;
-
 			// reached the end
-			if (previousPageData.nextCursor === null) return null;
+			if (previousPageData && previousPageData.nextCursor === null) return null;
 
-			// add the cursor to the API endpoint
+			// fetch initial page
+			if (pageIndex === 0 || !previousPageData) return "/api/recent?limit=10";
+
+			// fetch next page
 			return `/api/recent?cursor=${previousPageData.nextCursor}&limit=10`;
 		},
 		fetcher,

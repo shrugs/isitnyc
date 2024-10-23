@@ -13,7 +13,7 @@ export type RecentResponse = {
 
 export async function getRecentNeighborhoods({
 	cursor = null,
-	limit = 10,
+	limit = 2,
 }: { cursor?: string | null; limit?: number } = {}): Promise<RecentResponse> {
 	const neighborhoods = await prisma.neighborhood.findMany({
 		where: {
