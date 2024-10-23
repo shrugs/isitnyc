@@ -4,9 +4,9 @@ import { anthropic } from "@ai-sdk/anthropic";
 import { Like, type Tag } from "@prisma/client";
 import { type CoreMessage, TypeValidationError, generateObject } from "ai";
 import { notFound } from "next/navigation";
-import { ZodError, z } from "zod";
+import { z } from "zod";
 
-type SimpleTag = Pick<Tag, "like" | "weight">;
+export type SimpleTag = Pick<Tag, "like" | "weight">;
 
 async function _generateTags(messages: CoreMessage[]): Promise<SimpleTag[]> {
 	const { object } = await generateObject({

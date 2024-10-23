@@ -23,7 +23,7 @@ export function SearchBar({ className }: { className?: string }) {
 	useOnClickOutside(root, () => setShow(false));
 
 	const [query, setQuery] = useState("");
-	const [debouncedQuery] = useDebounce(query, 500);
+	const [debouncedQuery] = useDebounce(query, 350);
 
 	const search = useMemo(
 		() => new SearchBoxCore({ accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN }),

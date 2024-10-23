@@ -1,5 +1,5 @@
 import { LocationDescriptionSkeleton } from "@/components/LocationDescription";
-import { LocationTagsSkeleton } from "@/components/LocationTags";
+import { LocationTagsSkeleton } from "@/components/location-tags/loader";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {

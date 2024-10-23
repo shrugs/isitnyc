@@ -65,6 +65,9 @@ const config: Config = {
 			animation: {
 				"fade-in": "fade-in 1s ease-out",
 			},
+			transitionDuration: {
+				"2000": "2000ms",
+			},
 			typography: {
 				DEFAULT: {
 					css: {

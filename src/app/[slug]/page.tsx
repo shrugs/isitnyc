@@ -1,11 +1,10 @@
 import { LocationDescription } from "@/components/LocationDescription";
-import { LocationTags, LocationTagsSkeleton } from "@/components/LocationTags";
 import MapComponent from "@/components/MapComponent";
+import { LocationTags } from "@/components/location-tags/loader";
 import { getOrRetrieveNeighborhood } from "@/lib/get-neighborhood";
 import { toFeature, toFeatureCollection } from "@/lib/postgis-helpers";
 import { getSlugId } from "@/lib/slugs";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
 export default async function NeighborhoodPage({
 	params,
@@ -32,10 +31,7 @@ export default async function NeighborhoodPage({
 				<h1 className="text-3xl font-heading font-semibold">{neighborhood.name}</h1>
 				<h2 className="text-md font-body">{neighborhood.placeFormatted}</h2>
 			</div>
-			<Suspense fallback={<LocationTagsSkeleton />}>
-				<LocationTags id={id} initialData={neighborhood.tags} />
-			</Suspense>
-			{/* <LocationDescriptionSkeleton /> */}
+			<LocationTags id={id} initialData={neighborhood.tags} />
 			<LocationDescription id={id} initialData={neighborhood.description ?? undefined} />
 		</>
 	);

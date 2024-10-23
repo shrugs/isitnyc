@@ -2,8 +2,9 @@
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
+import { bbox } from "@turf/bbox";
 import { useTheme } from "next-themes";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import {
 	AttributionControl,
 	type MapRef,
@@ -11,6 +12,7 @@ import {
 	Map as ReactMap,
 	Source,
 } from "react-map-gl/maplibre";
+import { useIsomorphicLayoutEffect } from "usehooks-ts";
 import Pin from "./Pin";
 
 export default function MapComponent({
@@ -24,7 +26,7 @@ export default function MapComponent({
 		() =>
 			source.features.map((feature) => (
 				<Marker
-					key={`${feature.properties?.city}, ${feature.properties?.country}`}
+					key={feature.id}
 					longitude={(feature.geometry as GeoJSON.Point).coordinates[0]}
 					latitude={(feature.geometry as GeoJSON.Point).coordinates[1]}
 					anchor="bottom"
@@ -35,7 +37,25 @@ export default function MapComponent({
 		[source],
 	);
 
-	const [longitude, latitude] = (source.features[0].geometry as GeoJSON.Point).coordinates;
+	const bounds = useMemo(() => bbox(source) as [number, number, number, number], [source]);
+
+	useEffect(() => {
+		requestAnimationFrame(() => {
+			map.current?.fitBounds(bounds, { padding: 20, maxZoom: 12.5, maxDuration: 2000 });
+		});
+	}, [bounds]);
+
+	const initialViewState =
+		source.features.length === 1
+			? {
+					longitude: (source.features[0].geometry as GeoJSON.Point).coordinates[0],
+					latitude: (source.features[0].geometry as GeoJSON.Point).coordinates[1],
+					zoom: 12.5,
+				}
+			: {
+					bounds,
+					padding: { bottom: 20, top: 20, left: 20, right: 20 },
+				};
 
 	return (
 		<div className={className}>
@@ -43,11 +63,7 @@ export default function MapComponent({
 				ref={map}
 				style={{ width: "100%", height: "100%" }}
 				mapStyle={`https://api.protomaps.com/styles/v2/${resolvedTheme}.json?key=${process.env.NEXT_PUBLIC_PROTOMAPS_API_KEY}`}
-				initialViewState={{
-					zoom: 12.5,
-					latitude,
-					longitude,
-				}}
+				initialViewState={initialViewState}
 				reuseMaps
 				attributionControl={false}
 			>
