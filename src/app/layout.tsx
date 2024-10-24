@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 
 import { SearchHeader } from "@/components/SearchHeader";
+import { ExternalLink } from "@/components/external-link";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Fraunces, Source_Serif_4 } from "next/font/google";
@@ -51,8 +52,21 @@ export default function RootLayout({
 						<SearchHeader />
 						{children}
 					</main>
-					<footer className="flex flex-row justify-end items-center p-4 border-t ">
-						<span className="text-muted-foreground">isitbrooklyn.com</span>
+					<footer className="flex flex-row justify-end items-center p-4 border-t">
+						<div className="flex flex-col gap-1 text-xs items-end">
+							<span className="text-muted-foreground">
+								Content courtesy of{" "}
+								<ExternalLink href="https://claude.ai/">Claude 3.5 Sonnet</ExternalLink>
+							</span>
+							<span className="text-muted-foreground">
+								Map via <ExternalLink href="https://protomaps.com">Protomaps</ExternalLink> &{" "}
+								<ExternalLink href="https://maplibre.org">maplibre</ExternalLink>, map data via{" "}
+								<ExternalLink href="https://docs.mapbox.com/api/search/search-box/">
+									Mapbox
+								</ExternalLink>{" "}
+								& <ExternalLink href="https://whosonfirst.org/">Who's On First</ExternalLink>
+							</span>
+						</div>
 					</footer>
 				</ThemeProvider>
 			</body>

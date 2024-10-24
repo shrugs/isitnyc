@@ -29,12 +29,6 @@ export function LocationDescription({ id, initialData }: { id: string; initialDa
 			<ReactMarkdown className="text-lg prose">{text}</ReactMarkdown>
 
 			{!text && isLoading && <LocationDescriptionSkeleton />}
-
-			{text && !isLoading && (
-				<p className="text-xs text-muted-foreground animate-fade-in self-end">
-					Tags & description courtesy of Claude 3.5 Sonnet
-				</p>
-			)}
 		</div>
 	);
 }
