@@ -1,4 +1,7 @@
-import { RecentNeighborhoods } from "@/components/recent-neighborhoods.tsx/loader";
+import { CityMap } from "@/components/city-map/loader";
+import { RecentNeighborhoods } from "@/components/recent-neighborhoods/loader";
+import { UseRefresh } from "@/components/use-refresh";
+import { LoaderCircle } from "lucide-react";
 
 export default function Home() {
 	return (
@@ -7,7 +10,15 @@ export default function Home() {
 				New York City neighborhoods are the lingua franca of urban vibes.
 			</h1>
 			<h2 className="text-muted-foreground">Even the LLMs think so.</h2>
+			<CityMap />
+			<h3 className="text-xl font-heading flex flex-row items-center flex-nowrap gap-2">
+				<span>Recently queried neighborhoods</span>
+				<LoaderCircle className="animate-spin h-4 w-4" />
+			</h3>
 			<RecentNeighborhoods />
+
+			{/* refresh the data on this page every 5 seconds */}
+			<UseRefresh ms={5000} />
 		</main>
 	);
 }

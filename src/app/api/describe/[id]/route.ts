@@ -17,15 +17,15 @@ The user will give you a location of a neighborhood in New York City. Describe i
 `;
 
 export async function POST(req: Request, { params: { id } }: { params: { id: string } }) {
-	const neighborhood = await prisma.neighborhood.findUnique({
+	const place = await prisma.place.findUnique({
 		where: { id },
 		select: { id: true, description: true, fullAddress: true },
 	});
 
-	if (!neighborhood) notFound();
+	if (!place) notFound();
 
-	if (neighborhood.description !== null) {
-		return new Response(formatStreamPart("text", neighborhood.description), {
+	if (place.description !== null) {
+		return new Response(formatStreamPart("text", place.description), {
 			status: 200,
 			headers: { "Content-Type": "text/plain" },
 		});
@@ -36,14 +36,14 @@ export async function POST(req: Request, { params: { id } }: { params: { id: str
 		messages: [
 			{
 				role: "system",
-				content: isNYCNeighborhood(neighborhood.id) ? DESCRIBE_NYC_PROMPT : DESCRIBE_ANY_PROMPT,
+				content: isNYCNeighborhood(place.id) ? DESCRIBE_NYC_PROMPT : DESCRIBE_ANY_PROMPT,
 			},
-			{ role: "user", content: neighborhood.fullAddress },
+			{ role: "user", content: place.fullAddress },
 		],
 		async onFinish({ text, finishReason, usage }) {
 			// cache if valid stop
 			if (finishReason === "stop" && text) {
-				await prisma.neighborhood.update({
+				await prisma.place.update({
 					where: { id },
 					data: { description: text },
 				});

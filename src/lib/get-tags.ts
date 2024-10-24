@@ -75,35 +75,35 @@ async function generateTags(address: string): Promise<SimpleTag[]> {
 }
 
 export async function getTags(id: string): Promise<SimpleTag[]> {
-	const neighborhood = await prisma.neighborhood.findUnique({
+	const place = await prisma.place.findUnique({
 		where: { id },
 		select: { id: true, fullAddress: true, tags: true },
 	});
 
-	if (!neighborhood) notFound();
+	if (!place) notFound();
 
 	// if cached, return cache
-	if (neighborhood.tags.length > 0) {
-		return neighborhood.tags;
+	if (place.tags.length > 0) {
+		return place.tags;
 	}
 
 	// if nyc neighborhood, 100% itself
-	const nyc = isNYCNeighborhood(neighborhood.id);
+	const nyc = isNYCNeighborhood(place.id);
 	if (nyc) {
 		// store these tags in db as well to prevent FOLC
 		const tag = await prisma.tag.create({
-			data: { like: nyc.like, weight: 100, neighborhoodId: id },
+			data: { like: nyc.like, weight: 100, placeId: id },
 		});
 		return [tag];
 	}
 
 	// otherwise, fetch from ai
 	try {
-		const tags = await generateTags(neighborhood.fullAddress);
+		const tags = await generateTags(place.fullAddress);
 
 		// save/cache
 		await prisma.tag.createMany({
-			data: tags.map((tag) => ({ neighborhoodId: id, ...tag })),
+			data: tags.map((tag) => ({ placeId: id, ...tag })),
 		});
 
 		return tags;

@@ -1,9 +1,9 @@
 "use client";
 
-import { getNeighborhoodSlug } from "@/lib/slugs";
+import { getPlaceSlug } from "@/lib/slugs";
 import { cn } from "@/lib/utils";
 import { SearchBoxCore, SessionToken } from "@mapbox/search-js-core";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Building, MapPinned } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
@@ -36,7 +36,7 @@ export function SearchBar({ className }: { className?: string }) {
 		(text) =>
 			search.suggest(text, {
 				sessionToken,
-				types: ["neighborhood", "locality"].join(","),
+				types: ["city", "neighborhood", "locality"].join(","),
 			}),
 	);
 
@@ -73,12 +73,12 @@ export function SearchBar({ className }: { className?: string }) {
 			);
 		}
 
-		return data?.suggestions.map(({ mapbox_id, name, place_formatted }) => (
+		return data?.suggestions.map(({ mapbox_id, name, feature_type, place_formatted }) => (
 			<CommandItem
 				key={mapbox_id}
 				onSelect={() => {
 					router.push(
-						`/${getNeighborhoodSlug({ id: mapbox_id, name })}?${new URLSearchParams({ st: sessionToken.toString() })}`,
+						`/${getPlaceSlug({ id: mapbox_id, name })}?${new URLSearchParams({ st: sessionToken.toString() })}`,
 					);
 					setQuery(name);
 					input.current?.blur();
@@ -86,9 +86,18 @@ export function SearchBar({ className }: { className?: string }) {
 				}}
 				value={mapbox_id}
 			>
-				<div className="flex flex-col gap-1">
-					<span className="font-bold text-md">{name}</span>
-					<span className="text-sm text-muted-foreground">{place_formatted}</span>
+				<div className="flex flex-row items-stretch gap-4 px-2">
+					<div className="flex flex-col justify-center">
+						{feature_type === "place" ? (
+							<Building className="h-4 w-4" />
+						) : (
+							<MapPinned className="h-4 w-4" />
+						)}
+					</div>
+					<div className="flex-1 flex flex-col gap-1">
+						<span className="font-bold text-md">{name}</span>
+						<span className="text-sm text-muted-foreground">{place_formatted}</span>
+					</div>
 				</div>
 			</CommandItem>
 		));
@@ -100,12 +109,12 @@ export function SearchBar({ className }: { className?: string }) {
 				ref={input}
 				value={query}
 				onValueChange={setQuery}
-				placeholder="Search for any neighborhood"
+				placeholder="Search for any city or neighborhood"
 				onFocus={() => setShow(true)}
 				className="text-md h-14"
 				icon={
 					pathname === "/" ? undefined : (
-						<Link href="/">
+						<Link href="/" onClick={() => setShow(false)}>
 							<ArrowLeft className="h-4 w-4 shrink-0" />
 						</Link>
 					)

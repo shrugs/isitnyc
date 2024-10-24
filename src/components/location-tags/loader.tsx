@@ -1,5 +1,4 @@
-import { getTags } from "@/lib/get-tags";
-import type { Tag } from "@prisma/client";
+import { type SimpleTag, getTags } from "@/lib/get-tags";
 import { Suspense } from "react";
 import { Skeleton } from "../ui/skeleton";
 import { LocationTagCell } from "./cell";
@@ -37,7 +36,7 @@ export function LocationTagsSkeleton() {
 	);
 }
 
-async function Loader({ id, initialData }: { id: string; initialData: Tag[] }) {
+async function Loader({ id, initialData }: { id: string; initialData: SimpleTag[] }) {
 	const tags = initialData.length > 0 ? initialData : await getTags(id);
 
 	return <RenderLocationTags tags={tags} />;

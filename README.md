@@ -2,20 +2,6 @@ is it brooklyn
 
 
 ```ts
-const neighborhoods = await prisma.neighborhood.findMany({
-  include: { tags: true }
-});
-
-const newNeighborhoods = await prisma.neighborhood.findMany({
-  where: {
-    description: { not: null },
-    tags: { some: {} }
-  },
-  include: { tags: true },
-  orderBy: { createdAt: 'desc' },
-  take: 10
-});
-
 const similarNeighborhoods = await prisma.neighborhood.findMany({
   where: {
     AND: [

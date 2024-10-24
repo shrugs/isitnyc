@@ -9,13 +9,15 @@ generator client {
   previewFeatures = ["postgresqlExtensions"]
 }
 
-model Neighborhood {
-  id             String                                @id
+model Place {
+  id             String                                  @id
   name           String
+  placeType      PlaceType
   fullAddress    String
   placeFormatted String
   description    String?
   geometry       Unsupported("geometry(Point, 4326)")?
+  bbox           Unsupported("geometry(Polygon, 4326)")?
   properties     Json
   tags           Tag[]
 
@@ -26,11 +28,16 @@ model Neighborhood {
 }
 
 model Tag {
-  id             String       @id @default(uuid())
-  like           Like
-  weight         Int
-  neighborhood   Neighborhood @relation(fields: [neighborhoodId], references: [id])
-  neighborhoodId String
+  id      String @id @default(uuid())
+  like    Like
+  weight  Int
+  place   Place  @relation(fields: [placeId], references: [id])
+  placeId String
+}
+
+enum PlaceType {
+  City
+  Neighborhood
 }
 
 enum Like {

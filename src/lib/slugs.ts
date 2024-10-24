@@ -1,6 +1,6 @@
-import type { Neighborhood } from "@prisma/client";
+import type { Place } from "@prisma/client";
 
-export const getNeighborhoodSlug = ({ id, name }: Pick<Neighborhood, "id" | "name">) =>
+export const getPlaceSlug = ({ id, name }: Pick<Place, "id" | "name">) =>
 	`${encodeURIComponent(name)}-${id}`;
 
 export const getSlugId = (slug: string) => slug.split("-").pop();
