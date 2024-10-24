@@ -62,6 +62,8 @@ export default function MapComponent({
 				interactiveLayerIds={["markers"]}
 				reuseMaps
 				attributionControl={false}
+				dragRotate={false}
+				touchZoomRotate={false}
 			>
 				<Source id="markers" type="geojson" data={source}>
 					{markers}
