@@ -26,17 +26,15 @@ export async function CityPage({ city }: { city: Pick<Place, "id" | "name" | "pl
 
 	const source: ComponentProps<typeof MapComponent>["source"] = {
 		type: "FeatureCollection",
-		features: [
-			{ type: "Feature", id: city.id, geometry, properties: city },
-			...neighborhoods.map<GeoJSON.Feature<GeoJSON.Geometry, (typeof neighborhoods)[number]>>(
-				(n) => ({
-					type: "Feature",
-					id: n.id,
-					properties: n,
-					geometry: n.geometry,
-				}),
-			),
-		],
+		features:
+			neighborhoods.length === 0
+				? [{ type: "Feature", id: city.id, geometry, properties: city }]
+				: neighborhoods.map((n) => ({
+						type: "Feature",
+						id: n.id,
+						properties: n,
+						geometry: n.geometry,
+					})),
 	};
 
 	return (
