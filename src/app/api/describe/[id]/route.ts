@@ -16,7 +16,9 @@ const DESCRIBE_NYC_PROMPT = `
 The user will give you a location of a neighborhood in New York City. Describe its vibe in 3 or fewer sentences .
 `;
 
-export async function POST(req: Request, { params: { id } }: { params: { id: string } }) {
+export async function POST(req: Request, props: { params: Promise<{ id: string }> }) {
+	const { id } = await props.params;
+
 	const place = await prisma.place.findUnique({
 		where: { id },
 		select: { id: true, description: true, fullAddress: true },

@@ -20,7 +20,8 @@ export function SearchBar({ className }: { className?: string }) {
 	const root = useRef<HTMLDivElement>(null);
 
 	const [show, setShow] = useState(false);
-	useOnClickOutside(root, () => setShow(false));
+	// biome-ignore lint/suspicious/noExplicitAny: usehooks-ts type is invalid and annoying
+	(useOnClickOutside as any)(root, () => setShow(false));
 
 	const [query, setQuery] = useState("");
 	const [debouncedQuery] = useDebounce(query, 350);

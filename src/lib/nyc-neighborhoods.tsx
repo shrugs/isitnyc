@@ -315,7 +315,7 @@ export const NYC_NEIGHBORHOODS = {
 	[Like.UnionSquare]: {
 		like: Like.UnionSquare,
 		name: "Union Square",
-		id: "",
+		id: "dXJuOm1ieHBsYzpKOEhzN0E",
 		description: "Shopping, farmers market, transit hub, rallies and events",
 	},
 	[Like.NoHo]: {

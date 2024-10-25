@@ -1,6 +1,6 @@
+import { NeighborhoodList, NeighborhoodListSkeleton } from "@/components/neighborhood-list";
 import { getRecentNeighborhoods } from "@/lib/get-recent-neighborhoods";
 import { Suspense } from "react";
-import { NeighborhoodList, NeighborhoodListSkeleton } from "@/components/neighborhood-list";
 
 async function RecentNeighborhoodsLoader() {
 	const neighborhoods = await getRecentNeighborhoods();

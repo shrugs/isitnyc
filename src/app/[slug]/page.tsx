@@ -5,18 +5,16 @@ import { getSlugId } from "@/lib/slugs";
 import { PlaceType } from "@prisma/client";
 import { notFound } from "next/navigation";
 
-export default async function PlacePage({
-	params,
-	searchParams,
-}: {
-	params: { slug: string };
-	searchParams: { [key: string]: string | string[] | undefined };
+export default async function PlacePage(props: {
+	params: Promise<{ slug: string }>;
+	searchParams: Promise<{ st?: string }>;
 }) {
+	const { st: sessionToken } = await props.searchParams;
+	const { slug } = await props.params;
 	// just a very annoying log in dev
-	if (params.slug === "installHook.js.map") notFound();
+	if (slug === "installHook.js.map") notFound();
 
-	const sessionToken = searchParams.st as string;
-	const id = getSlugId(params.slug);
+	const id = getSlugId(slug);
 	if (!id) notFound();
 
 	const place = await getOrRetrievePlace(id, sessionToken);
