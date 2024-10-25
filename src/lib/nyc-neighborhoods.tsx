@@ -207,13 +207,13 @@ export const NYC_NEIGHBORHOODS = {
 	[Like.FortGreene]: {
 		like: Like.FortGreene,
 		name: "Fort Greene",
-		id: "",
+		id: "dXJuOm1ieHBsYzpEWEZzN0E",
 		description: "Artistic, historic, Fort Greene Park, BAM cultural district",
 	},
 	[Like.SunsetPark]: {
 		like: Like.SunsetPark,
 		name: "Sunset Park",
-		id: "",
+		id: "dXJuOm1ieHBsYzpKYUpNN0E",
 		description: "Diverse, panoramic views, Brooklyn's Chinatown, Industry City",
 	},
 	[Like.Flushing]: {

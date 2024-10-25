@@ -9,7 +9,9 @@ export default function Home() {
 			<h1 className="text-5xl font-heading text-balance">
 				New York City neighborhoods are the lingua franca of urban vibes.
 			</h1>
-			<h2 className="text-muted-foreground">Even the LLMs think so.</h2>
+			<h2 className="text-muted-foreground">
+				See your neighborhood through the solipsistic lens of a New Yorker.
+			</h2>
 			<CityMap />
 			<h3 className="text-xl font-heading flex flex-row items-center flex-nowrap gap-2">
 				<span>Recently queried neighborhoods</span>
@@ -17,8 +19,8 @@ export default function Home() {
 			</h3>
 			<RecentNeighborhoods />
 
-			{/* refresh the data on this page every 5 seconds */}
-			<UseRefresh ms={5000} />
+			{/* request new data on this page every 5 seconds */}
+			<UseRefresh ms={5_000} />
 		</main>
 	);
 }
