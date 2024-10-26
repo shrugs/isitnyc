@@ -3,7 +3,7 @@ import MapComponent from "../MapComponent";
 import { Skeleton } from "../ui/skeleton";
 
 export function CityMapSkeleton() {
-	return <Skeleton className="w-full aspect-video rounded-lg" />;
+	return <Skeleton className="w-full aspect-video rounded-xl" />;
 }
 
 export function RenderCityMap({ source }: Pick<ComponentProps<typeof MapComponent>, "source">) {

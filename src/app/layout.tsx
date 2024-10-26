@@ -2,8 +2,8 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 
 import { SearchHeader } from "@/components/SearchHeader";
+import { ThemeButton } from "@/components/ThemeButton";
 import { ExternalLink } from "@/components/external-link";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Fraunces, Source_Serif_4 } from "next/font/google";
@@ -40,7 +40,7 @@ export default function RootLayout({
 					fontHeading.variable,
 					fontBody.variable,
 					"supports-[height:100cqh]:min-h-[100cqh] supports-[height:100svh]:min-h-[100svh]",
-					"flex flex-col gap-4",
+					"flex flex-col",
 				)}
 			>
 				<ThemeProvider
@@ -49,28 +49,27 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
-					<TooltipProvider>
-						<main className="flex-1 w-full max-w-screen-md mx-auto flex flex-col py-2 px-4 gap-2">
-							<SearchHeader />
-							{children}
-						</main>
-						<footer className="flex flex-row justify-end items-center p-4 border-t">
-							<div className="flex flex-col gap-1 text-xs items-end">
-								<span className="text-muted-foreground">
-									Content courtesy of{" "}
-									<ExternalLink href="https://claude.ai/">Claude 3.5 Sonnet</ExternalLink>
-								</span>
-								<span className="text-muted-foreground hidden md:block">
-									Map via <ExternalLink href="https://protomaps.com">Protomaps</ExternalLink> &{" "}
-									<ExternalLink href="https://maplibre.org">maplibre</ExternalLink>, map data via{" "}
-									<ExternalLink href="https://docs.mapbox.com/api/search/search-box/">
-										Mapbox
-									</ExternalLink>{" "}
-									& <ExternalLink href="https://whosonfirst.org/">Who's On First</ExternalLink>
-								</span>
-							</div>
-						</footer>
-					</TooltipProvider>
+					<main className="flex-1 w-full max-w-screen-md mx-auto flex flex-col py-2 px-4 gap-2">
+						<SearchHeader />
+						{children}
+					</main>
+					<footer className="flex flex-row justify-between items-center p-4 border-t mt-4">
+						<ThemeButton />
+						<div className="flex flex-col gap-1 text-xs items-end">
+							<span className="text-muted-foreground">
+								Content courtesy of{" "}
+								<ExternalLink href="https://claude.ai/">Claude 3.5 Sonnet</ExternalLink>
+							</span>
+							<span className="text-muted-foreground hidden md:block">
+								Map via <ExternalLink href="https://protomaps.com">Protomaps</ExternalLink> &{" "}
+								<ExternalLink href="https://maplibre.org">maplibre</ExternalLink>, map data via{" "}
+								<ExternalLink href="https://docs.mapbox.com/api/search/search-box/">
+									Mapbox
+								</ExternalLink>{" "}
+								& <ExternalLink href="https://whosonfirst.org/">Who's On First</ExternalLink>
+							</span>
+						</div>
+					</footer>
 				</ThemeProvider>
 			</body>
 		</html>

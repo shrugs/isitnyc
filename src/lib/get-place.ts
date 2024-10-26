@@ -1,10 +1,8 @@
 import "server-only";
 
 import { SearchBoxCore, type SearchBoxSuggestion, SessionToken } from "@mapbox/search-js-core";
-import { type Place, PlaceType, type PrismaPromise, type Tag } from "@prisma/client";
-import { redirect } from "next/navigation";
+import { type Place, PlaceType, type Tag } from "@prisma/client";
 import prisma from "./prisma";
-import { getPlaceSlug } from "./slugs";
 
 const search = new SearchBoxCore({ accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN });
 
@@ -28,10 +26,17 @@ async function fetchAndStorePlace(id: string, sessionToken: string) {
 
 	// if this is a neighborhood and mapbox knows its city, go fetch that as well before continuing
 	if (!isCity && feature.properties.context.place) {
-		await fetchAndStorePlace(feature.properties.context.place.id, sessionToken);
+		const city = await prisma.place.findUnique({
+			where: { id: feature.properties.context.place.id },
+		});
+
+		if (!city) {
+			await fetchAndStorePlace(feature.properties.context.place.id, sessionToken);
+		}
 	}
 
 	const bbox = feature.properties.bbox;
+	console.log(`Inserting ${id}: ${feature.properties.name}`);
 	const [place] = await prisma.$transaction([
 		// create the place
 		prisma.place.create({
@@ -86,12 +91,7 @@ export async function getOrRetrievePlace(
 		},
 	});
 
-	if (place) {
-		// leftover session token? shouldn't happen to real users
-		if (sessionToken) return redirect(`/${getPlaceSlug(place)}`);
-
-		return place;
-	}
+	if (place) return place;
 
 	// if no neighborhood known, attempt an inline fetch
 	if (!sessionToken) {
@@ -100,5 +100,5 @@ export async function getOrRetrievePlace(
 
 	place = await fetchAndStorePlace(id, sessionToken);
 
-	redirect(`/${getPlaceSlug(place)}`);
+	return place;
 }

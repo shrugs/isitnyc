@@ -1,9 +1,9 @@
 import { CityPage } from "@/components/city-page";
 import { NeighborhoodPage } from "@/components/neighborhood-page";
 import { getOrRetrievePlace } from "@/lib/get-place";
-import { getSlugId } from "@/lib/slugs";
+import { getPlaceSlug, getSlugId } from "@/lib/slugs";
 import { PlaceType } from "@prisma/client";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export default async function PlacePage(props: {
 	params: Promise<{ slug: string }>;
@@ -19,10 +19,9 @@ export default async function PlacePage(props: {
 
 	const place = await getOrRetrievePlace(id, sessionToken);
 
-	// TODO: if place.placeType === PlaceType.City render CityPage
-	// else render NeighborhoodPage
+	// we've resolved the place in question, now remove any session token
+	if (sessionToken) redirect(`/${getPlaceSlug(place)}`);
 
 	if (place.placeType === PlaceType.City) return <CityPage city={place} />;
-
 	return <NeighborhoodPage neighborhood={place} />;
 }
