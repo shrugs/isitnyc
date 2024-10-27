@@ -1,0 +1,19 @@
+.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+	@apply !border-t-background;
+}
+
+.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+	@apply !border-r-background;
+}
+
+.maplibregl-popup-anchor-right .maplibregl-popup-tip {
+	@apply !border-l-background;
+}
+
+.maplibregl-popup-anchor-top .maplibregl-popup-tip {
+	@apply !border-b-background;
+}
+
+.maplibregl-popup-content {
+	@apply bg-background text-foreground rounded-lg px-2 py-1 shadow-sm;
+}

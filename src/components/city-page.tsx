@@ -2,7 +2,7 @@ import { appendGeometries, getGeometry } from "@/lib/postgis-helpers";
 import { prisma } from "@/lib/prisma";
 import type { Place } from "@prisma/client";
 import type { ComponentProps } from "react";
-import MapComponent from "./MapComponent";
+import MapComponent from "./map/MapComponent";
 import { NeighborhoodList } from "./neighborhood-list";
 
 // TODO: cache this page for at least a few seconds

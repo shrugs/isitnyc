@@ -3,8 +3,8 @@ import { getGeometry } from "@/lib/postgis-helpers";
 import type { Place } from "@prisma/client";
 import type { ComponentProps } from "react";
 import { LocationDescription } from "./LocationDescription";
-import MapComponent from "./MapComponent";
 import { LocationTags } from "./location-tags/loader";
+import MapComponent from "./map/MapComponent";
 
 export async function NeighborhoodPage({
 	neighborhood,

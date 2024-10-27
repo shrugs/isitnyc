@@ -2,7 +2,7 @@ import { appendGeometries } from "@/lib/postgis-helpers";
 import { prisma } from "@/lib/prisma";
 import { PlaceType } from "@prisma/client";
 import { type ComponentProps, Suspense } from "react";
-import type MapComponent from "../MapComponent";
+import type MapComponent from "../map/MapComponent";
 import { CityMapSkeleton, RenderCityMap } from "./renderer";
 
 async function CityMapLoader() {

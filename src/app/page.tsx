@@ -20,7 +20,7 @@ export default function Home() {
 			<RecentNeighborhoods />
 
 			{/* request new data on this page every 5 seconds */}
-			<UseRefresh ms={5_000} />
+			<UseRefresh ms={process.env.NODE_ENV === "development" ? 10_000 : 5_000} />
 		</main>
 	);
 }

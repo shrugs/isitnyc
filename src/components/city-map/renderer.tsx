@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react";
-import MapComponent from "../MapComponent";
+import MapComponent from "../map/MapComponent";
 import { Skeleton } from "../ui/skeleton";
 
 export function CityMapSkeleton() {
