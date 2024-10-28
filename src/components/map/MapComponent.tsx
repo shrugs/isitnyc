@@ -39,12 +39,9 @@ const clusterCountLayer: LayerProps = {
 	filter: ["has", "point_count"],
 	layout: {
 		"text-field": "{point_count_abbreviated}",
-		// "text-font": ["Arial"],
+		"text-font": ["Noto Sans Medium"],
 		"text-size": 12,
 	},
-	// paint: {
-	// 	"text-color": "#000000",
-	// },
 };
 
 export const unclusteredPointLayer: LayerProps = {
@@ -170,10 +167,10 @@ export default function MapComponent({
 					data={source}
 					cluster
 					clusterMaxZoom={12}
-					clusterRadius={40}
+					clusterRadius={35}
 				>
 					<Layer {...clusterLayer} />
-					{/* <Layer {...clusterCountLayer} /> */}
+					<Layer {...clusterCountLayer} />
 					<Layer {...unclusteredPointLayer} />
 				</Source>
 				{hoverInfo && (
