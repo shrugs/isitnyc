@@ -8,6 +8,10 @@ export function CityMapSkeleton() {
 
 export function RenderCityMap({ source }: Pick<ComponentProps<typeof MapComponent>, "source">) {
 	return (
-		<MapComponent className="aspect-video w-full rounded-xl overflow-hidden" source={source} />
+		<MapComponent
+			className="aspect-video w-full rounded-xl overflow-hidden"
+			source={source}
+			cluster
+		/>
 	);
 }

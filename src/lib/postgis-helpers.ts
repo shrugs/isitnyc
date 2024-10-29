@@ -28,12 +28,17 @@ export const getGeometry = async (id: string): Promise<GeoJSON.Geometry | null> 
 	return result[0]?.geojson ? JSON.parse(result[0].geojson) : null;
 };
 
-// export const getBbox = async (id: string): Promise<GeoJSON.Geometry | null> => {
-// 	const result = await prisma.$queryRaw<{ geojson: string }[]>`
-// 		SELECT ST_AsGeoJSON(ST_Transform(bbox, 4326)) as geojson
-// 		FROM "Place"
-// 		WHERE id = ${id}
-// 	`;
+export const getBbox = async (id: string): Promise<GeoJSON.BBox | null> => {
+	const result = await prisma.$queryRaw<{ geojson: [number, number, number, number] }[]>`
+		SELECT array_to_json(array[
+			ST_XMin(ST_Transform(bbox, 4326)),
+			ST_YMin(ST_Transform(bbox, 4326)),
+			ST_XMax(ST_Transform(bbox, 4326)),
+			ST_YMax(ST_Transform(bbox, 4326))
+		]) as geojson
+		FROM "Place"
+		WHERE id = ${id}
+	`;
 
-// 	return result[0]?.geojson ? JSON.parse(result[0].geojson) : null;
-// };
+	return result[0]?.geojson || null;
+};

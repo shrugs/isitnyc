@@ -6,19 +6,17 @@ import { ThemeButton } from "@/components/ThemeButton";
 import { ExternalLink } from "@/components/external-link";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Fraunces, Source_Serif_4 } from "next/font/google";
+import localFont from "next/font/local";
 
-const fontHeading = Fraunces({
+const fontHeading = localFont({
+	src: "../fonts/Fraunces/Fraunces-VariableFont_SOFT,WONK,opsz,wght.ttf",
 	variable: "--font-heading",
-	weight: "600",
-	subsets: ["latin"],
 	display: "swap",
 });
 
-const fontBody = Source_Serif_4({
+const fontBody = localFont({
+	src: "../fonts/Source_Serif_4/SourceSerif4-VariableFont_opsz,wght.ttf",
 	variable: "--font-body",
-	weight: "400",
-	subsets: ["latin"],
 	display: "swap",
 });
 

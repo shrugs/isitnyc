@@ -37,7 +37,7 @@ export function LocationTagsSkeleton() {
 }
 
 async function Loader({ id, initialData }: { id: string; initialData: SimpleTag[] }) {
-	const tags = initialData.length > 0 ? initialData : await getTags(id);
+	const tags = initialData || (await getTags(id));
 
 	return <RenderLocationTags tags={tags} />;
 }

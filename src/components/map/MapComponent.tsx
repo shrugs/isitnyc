@@ -28,7 +28,7 @@ const clusterLayer: LayerProps = {
 	filter: ["has", "point_count"],
 	paint: {
 		"circle-color": ["step", ["get", "point_count"], "#51bbd6", 100, "#f1f075", 750, "#f28cb1"],
-		"circle-radius": ["step", ["get", "point_count"], 20, 100, 30, 750, 40],
+		"circle-radius": ["step", ["get", "point_count"], 10, 100, 15, 750, 20],
 	},
 };
 
@@ -40,7 +40,7 @@ const clusterCountLayer: LayerProps = {
 	layout: {
 		"text-field": "{point_count_abbreviated}",
 		"text-font": ["Noto Sans Medium"],
-		"text-size": 12,
+		"text-size": 8,
 	},
 };
 
@@ -60,12 +60,14 @@ export const unclusteredPointLayer: LayerProps = {
 export default function MapComponent({
 	source,
 	className,
+	cluster = false,
 }: {
 	source: GeoJSON.FeatureCollection<
 		GeoJSON.Geometry,
 		Pick<Place, "id" | "name" | "placeFormatted">
 	>;
 	className?: string;
+	cluster?: boolean;
 }) {
 	const router = useRouter();
 	const { resolvedTheme } = useTheme();
@@ -165,9 +167,11 @@ export default function MapComponent({
 					id="items"
 					type="geojson"
 					data={source}
-					cluster
-					clusterMaxZoom={12}
-					clusterRadius={35}
+					{...(cluster && {
+						cluster: true,
+						clusterMaxZoom: 12,
+						clusterRadius: 15,
+					})}
 				>
 					<Layer {...clusterLayer} />
 					<Layer {...clusterCountLayer} />

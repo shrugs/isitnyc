@@ -6,14 +6,14 @@ import { LoaderCircle } from "lucide-react";
 export default function Home() {
 	return (
 		<main className="flex flex-col gap-4 w-full">
-			<h1 className="text-5xl font-heading text-balance">
+			<h1 className="text-5xl font-heading font-semibold text-balance">
 				New York City neighborhoods are the lingua franca of urban vibes.
 			</h1>
 			<h2 className="text-muted-foreground">
 				See your neighborhood through the solipsistic lens of a New Yorker.
 			</h2>
 			<CityMap />
-			<h3 className="text-xl font-heading flex flex-row items-center flex-nowrap gap-2">
+			<h3 className="text-xl font-heading font-semibold flex flex-row items-center flex-nowrap gap-2">
 				<span>Recently queried neighborhoods</span>
 				<LoaderCircle className="animate-spin h-4 w-4" />
 			</h3>

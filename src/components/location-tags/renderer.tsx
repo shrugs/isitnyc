@@ -12,9 +12,10 @@ export function RenderLocationTags({ tags }: { tags: SimpleTag[] }) {
 					weight={100}
 				/>
 			)}
-			{tags.map((tag) => (
+			{tags.map((tag, i) => (
 				<LocationTagCell
-					key={tag.like}
+					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+					key={i}
 					top={NYC_NEIGHBORHOODS[tag.like].name}
 					bottom={`${tag.weight}%`}
 					weight={tag.weight}

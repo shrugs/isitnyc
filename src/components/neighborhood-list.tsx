@@ -1,7 +1,8 @@
+import type { SimpleTag } from "@/lib/get-tags";
 import { getPlaceSlug } from "@/lib/slugs";
-import type { Place, Tag } from "@prisma/client";
+import type { Place } from "@prisma/client";
 import Link from "next/link";
-import { RenderLocationTags } from "./location-tags/renderer";
+import { LocationTags } from "./location-tags/loader";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 
@@ -34,7 +35,7 @@ export function NeighborhoodList({
 	neighborhoods,
 }: {
 	neighborhoods: (Pick<Place, "id" | "name" | "placeFormatted"> & {
-		tags: Tag[];
+		tags: SimpleTag[];
 	})[];
 }) {
 	return (
@@ -49,7 +50,7 @@ export function NeighborhoodList({
 									<span className="text-md font-semibold">{n.name}</span>
 									<span className="text-muted-foreground">{n.placeFormatted}</span>
 								</div>
-								<RenderLocationTags tags={n.tags} />
+								<LocationTags id={n.id} initialData={n.tags} />
 							</div>
 						</Link>
 					</Button>

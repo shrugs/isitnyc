@@ -1,5 +1,8 @@
 import { getOrRetrievePlace } from "@/lib/get-place";
+import { getBbox } from "@/lib/postgis-helpers";
+import prisma from "@/lib/prisma";
 import { SearchBoxCore, SessionToken } from "@mapbox/search-js-core";
+import { PlaceType } from "@prisma/client";
 import { notFound } from "next/navigation";
 import { type NextRequest, NextResponse } from "next/server";
 
@@ -12,12 +15,15 @@ export async function GET(request: NextRequest) {
 	const sessionToken = new SessionToken();
 	const results = await search.suggest(query, {
 		sessionToken,
-		types: "city",
+		types: "neighborhood,locality",
 	});
 
 	const firstSuggestion = results.suggestions?.[0];
 
-	if (!firstSuggestion) notFound();
+	if (!firstSuggestion) {
+		console.log(`${query} has no features in mapbox`);
+		notFound();
+	}
 
 	const place = await getOrRetrievePlace(firstSuggestion.mapbox_id, sessionToken.toString());
 
