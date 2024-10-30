@@ -1,5 +1,5 @@
 import { type SimpleTag, getTags } from "@/lib/get-tags";
-import { Suspense } from "react";
+import { type ComponentProps, Suspense } from "react";
 import { Skeleton } from "../ui/skeleton";
 import { LocationTagCell } from "./cell";
 import { RenderLocationTags } from "./renderer";
@@ -36,10 +36,17 @@ export function LocationTagsSkeleton() {
 	);
 }
 
-async function Loader({ id, initialData }: { id: string; initialData: SimpleTag[] }) {
+async function Loader({
+	id,
+	initialData,
+	...rest
+}: { id: string; initialData?: SimpleTag[] } & Pick<
+	ComponentProps<typeof RenderLocationTags>,
+	"link"
+>) {
 	const tags = initialData || (await getTags(id));
 
-	return <RenderLocationTags tags={tags} />;
+	return <RenderLocationTags tags={tags} {...rest} />;
 }
 
 export function LocationTags(props: React.ComponentProps<typeof Loader>) {

@@ -3,7 +3,7 @@
 import { getPlaceSlug } from "@/lib/slugs";
 import { cn } from "@/lib/utils";
 import { SearchBoxCore, SessionToken } from "@mapbox/search-js-core";
-import { ArrowLeft, Building, MapPinned } from "lucide-react";
+import { ArrowLeft, Building, LandPlot } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
@@ -92,7 +92,7 @@ export function SearchBar({ className }: { className?: string }) {
 						{feature_type === "place" ? (
 							<Building className="h-4 w-4" />
 						) : (
-							<MapPinned className="h-4 w-4" />
+							<LandPlot className="h-4 w-4" />
 						)}
 					</div>
 					<div className="flex-1 flex flex-col gap-1">
