@@ -4,7 +4,7 @@ export function Pill({ href, children }: { href: string; children: React.ReactNo
 	return (
 		<Link
 			href={href}
-			className="inline-flex shrink-0 items-center rounded-full border text-xs transition-colors bg-muted border-input text-secondary-foreground shadow-sm hover:shadow-md hover:bg-muted/80 py-1 px-4"
+			className="rounded-xl py-2 px-3 flex flex-col bg-accent accent-foreground truncate transition-[flex] duration-300 ease-in-out border-2 border-background hover:border-foreground"
 		>
 			{children}
 		</Link>

@@ -51,11 +51,11 @@ export default async function LikePage(props: { params: Promise<{ neighborhood: 
 				<h2 className="text-md font-body">where likeness &gt; 30%</h2>
 			</div>
 			<NeighborhoodList neighborhoods={neighborhoodsWithoutGeography} />
-			{neighborhoods.length === 0 && (
-				<div className="flex flex-col justify-center items-center p-12 border-2 border-dashed rounded-xl text-muted-foreground">
-					We didn't find any neighborhoods like {nycName}.
-				</div>
-			)}
+			<div className="flex flex-col justify-center items-center p-12 border-2 border-dashed rounded-xl text-muted-foreground">
+				{neighborhoods.length === 0
+					? `We didn't find any neighborhoods like ${nycName} yet—search some neighborhoods above to add them to the database.`
+					: "Looking for more? Search some neighborhoods above to add them to the database."}
+			</div>
 		</div>
 	);
 }

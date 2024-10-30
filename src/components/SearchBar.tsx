@@ -115,7 +115,13 @@ export function SearchBar({ className }: { className?: string }) {
 				className="text-md h-14"
 				icon={
 					pathname === "/" ? undefined : (
-						<Link href="/" onClick={() => setShow(false)}>
+						<Link
+							href="/"
+							onClick={() => {
+								setShow(false);
+								setQuery("");
+							}}
+						>
 							<ArrowLeft className="h-4 w-4 shrink-0" />
 						</Link>
 					)

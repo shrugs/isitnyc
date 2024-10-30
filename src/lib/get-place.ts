@@ -45,7 +45,8 @@ async function fetchAndStorePlace(id: string, sessionToken: string) {
 				name: feature.properties.name,
 				placeType: isCity ? PlaceType.City : PlaceType.Neighborhood,
 				fullAddress: feature.properties.full_address,
-				placeFormatted: feature.properties.place_formatted,
+				placeFormatted: feature.properties.place_formatted || feature.properties.name,
+				// ^ handle city-states like Hong Kong
 				properties: feature.properties as object,
 			},
 			include: { tags: true },
