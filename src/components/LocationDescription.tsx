@@ -26,7 +26,9 @@ export function LocationDescription({ id, initialData }: { id: string; initialDa
 
 	return (
 		<div className="flex flex-col gap-1 w-full">
-			<ReactMarkdown className="text-lg prose">{text}</ReactMarkdown>
+			<ReactMarkdown className="text-lg prose text-foreground prose-strong:text-foreground">
+				{text}
+			</ReactMarkdown>
 
 			{!text && isLoading && <LocationDescriptionSkeleton />}
 		</div>
