@@ -1,28 +1,20 @@
 is it brooklyn
 
+cleans up duplicate tags (??)
 
-```ts
-const similarNeighborhoods = await prisma.neighborhood.findMany({
-  where: {
-    AND: [
-      {
-        tags: {
-          some: {
-            like: 'Williamsburg',
-            weight: { gt: 20 }
-          }
-        }
-      },
-      {
-        tags: {
-          some: {
-            like: 'CrownHeights',
-            weight: { gt: 20 }
-          }
-        }
-      }
-    ]
-  },
-  include: { tags: true }
-});
+```sql
+DELETE FROM "Tag"
+WHERE id IN (
+  SELECT t2.id
+  FROM "Tag" t2
+  INNER JOIN (
+    SELECT "placeId", "like", MIN(id) as "firstId"
+    FROM "Tag"
+    GROUP BY "placeId", "like"
+    HAVING COUNT(*) > 1
+  ) dupes
+  ON t2."placeId" = dupes."placeId"
+  AND t2."like" = dupes."like"
+  WHERE t2.id != dupes."firstId"
+);
 ```

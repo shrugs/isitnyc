@@ -40,7 +40,7 @@ const CommandInput = React.forwardRef<
 	}
 >(({ className, icon = <MagnifyingGlassIcon />, ...props }, ref) => (
 	<div
-		className="flex items-center border-b bg-popover px-3 shadow-xl rounded-full"
+		className="flex items-center border bg-popover px-3 shadow-xl rounded-full"
 		cmdk-input-wrapper=""
 	>
 		{React.cloneElement(icon, {

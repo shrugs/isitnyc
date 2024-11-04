@@ -4,7 +4,12 @@ export function isNYCNeighborhood(id: string) {
 	return Object.values(NYC_NEIGHBORHOODS).find((n) => n.id === id);
 }
 
-export const NYC_NEIGHBORHOODS = {
+export const NYC_NEIGHBORHOODS: Record<Like, { like: Like; name: string; id: string }> = {
+	[Like.Unknown]: {
+		like: Like.Unknown,
+		name: "Unknown",
+		id: "unknown",
+	},
 	[Like.Williamsburg]: {
 		like: Like.Williamsburg,
 		name: "Williamsburg",

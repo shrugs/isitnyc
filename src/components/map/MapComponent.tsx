@@ -27,8 +27,10 @@ const clusterLayer: LayerProps = {
 	source: "items",
 	filter: ["has", "point_count"],
 	paint: {
-		"circle-color": ["step", ["get", "point_count"], "#51bbd6", 100, "#f1f075", 750, "#f28cb1"],
+		"circle-color": "hsl(50, 30%, 90%)", // --accent,
 		"circle-radius": ["step", ["get", "point_count"], 10, 100, 15, 750, 20],
+		"circle-stroke-width": 1,
+		"circle-stroke-color": "hsl(50, 20%, 20%)", // --foreground
 	},
 };
 
@@ -37,6 +39,9 @@ const clusterCountLayer: LayerProps = {
 	type: "symbol",
 	source: "items",
 	filter: ["has", "point_count"],
+	paint: {
+		"text-color": "hsl(24, 9.8%, 10%)", // --muted-foreground
+	},
 	layout: {
 		"text-field": "{point_count_abbreviated}",
 		"text-font": ["Noto Sans Medium"],
@@ -50,10 +55,10 @@ export const unclusteredPointLayer: LayerProps = {
 	source: "items",
 	filter: ["!", ["has", "point_count"]],
 	paint: {
-		"circle-color": "hsl(24.6, 95%, 53.1%)",
+		"circle-color": "hsl(24.6, 80%, 53.1%)", // --primary
 		"circle-radius": 6,
 		"circle-stroke-width": 1,
-		"circle-stroke-color": "#fff",
+		"circle-stroke-color": "hsl(50, 20%, 20%)", // --foreground
 	},
 };
 

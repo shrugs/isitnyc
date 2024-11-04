@@ -29,10 +29,11 @@ async function _generateTags(messages: CoreMessage[]): Promise<SimpleTag[]> {
 					}),
 				)
 				.describe(
-					`A set of tags indicating which NYC neighborhoods the user's provided location is similar to, from a vibe perspective, along with an associated weighting of its relevance to the overall vibe of that location. The provided weights should add up to 100.`,
+					`A set of tags indicating which NYC neighborhoods the user's provided location is similar to, from a vibe perspective, along with an associated weighting of its relevance to the overall vibe of that location. The provided weights should add up to 100. If you have absolutely no information about a location, return a single 100-weight Unknown tag.`,
 				),
 		}),
 		messages,
+		maxRetries: 0,
 	});
 
 	return object.tags;
@@ -41,13 +42,9 @@ async function _generateTags(messages: CoreMessage[]): Promise<SimpleTag[]> {
 async function generateTags(address: string): Promise<SimpleTag[]> {
 	console.log(`Generating Tags: ${address}`);
 	let count = 0;
-	const messages: CoreMessage[] = [
-		// TODO: system prompt?
-		// { role: "system", content: TAG_PROMPT },
-		{ role: "user", content: address },
-	];
+	const messages: CoreMessage[] = [{ role: "user", content: address }];
 
-	while (count < 3) {
+	while (count < 2) {
 		try {
 			const tags = await _generateTags(messages);
 			console.log(`↳ [${tags.map((t) => t.like).join(", ")}]`);
@@ -69,9 +66,7 @@ async function generateTags(address: string): Promise<SimpleTag[]> {
 		}
 	}
 
-	throw new Error(`Could not generate tags for ${address}`);
-
-	// TODO: reweight?
+	return [{ like: Like.Unknown, weight: 100 }];
 }
 
 export async function getTags(id: string): Promise<SimpleTag[]> {

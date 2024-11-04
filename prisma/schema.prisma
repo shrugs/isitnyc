@@ -117,4 +117,5 @@ enum Like {
   DowntownBrooklyn
   ProspectLeffertsGardens
   Midtown
+  Unknown
 }

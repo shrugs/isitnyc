@@ -1,4 +1,5 @@
 import { getOrRetrievePlace } from "@/lib/get-place";
+import { getTags } from "@/lib/get-tags";
 import { getBbox } from "@/lib/postgis-helpers";
 import prisma from "@/lib/prisma";
 import { SearchBoxCore, SessionToken } from "@mapbox/search-js-core";
@@ -9,23 +10,16 @@ import { type NextRequest, NextResponse } from "next/server";
 const search = new SearchBoxCore({ accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN });
 
 export async function GET(request: NextRequest) {
-	const searchParams = request.nextUrl.searchParams;
-	const query = searchParams.get("query") as string;
-
-	const sessionToken = new SessionToken();
-	const results = await search.suggest(query, {
-		sessionToken,
-		types: "neighborhood,locality",
+	const neighborhoods = await prisma.place.findMany({
+		where: { placeType: PlaceType.Neighborhood, tags: { none: {} } },
+		take: 10_000,
 	});
 
-	const firstSuggestion = results.suggestions?.[0];
-
-	if (!firstSuggestion) {
-		console.log(`${query} has no features in mapbox`);
-		notFound();
+	for (const n of neighborhoods) {
+		await getTags(n.id);
 	}
 
-	const place = await getOrRetrievePlace(firstSuggestion.mapbox_id, sessionToken.toString());
+	console.log("done");
 
-	return NextResponse.json({ id: place.id });
+	return NextResponse.json({ len: neighborhoods.length });
 }
