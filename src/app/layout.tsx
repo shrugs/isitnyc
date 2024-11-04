@@ -23,7 +23,7 @@ const fontBody = localFont({
 
 export const metadata: Metadata = {
 	title: "Is it NYC?",
-	description: "Discover the world through the solopsistic lens of a New Yorker.",
+	description: "Discover the world through the solipsistic lens of a New Yorker.",
 };
 
 export default function RootLayout({
