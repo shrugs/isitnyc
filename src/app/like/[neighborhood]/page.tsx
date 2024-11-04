@@ -32,7 +32,7 @@ export default async function LikePage(props: { params: Promise<{ neighborhood: 
 			/>
 			<div className="flex flex-col">
 				<h1 className="text-3xl font-heading font-semibold">Neighborhoods like {nycName}</h1>
-				<h2 className="text-md font-body">where likeness &gt; 30%</h2>
+				<h2 className="text-md font-body">where likeness &gt; 10%</h2>
 			</div>
 			<NeighborhoodList neighborhoods={neighborhoods} />
 			<div className="flex flex-col justify-center items-center p-12 border-2 border-dashed rounded-xl text-muted-foreground">

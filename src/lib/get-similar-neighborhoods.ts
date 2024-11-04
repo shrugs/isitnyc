@@ -8,7 +8,7 @@ export const getSimilarNeighborhoods = unstable_cache(
 		const neighborhoodsWithoutGeography = await prisma.place.findMany({
 			where: {
 				placeType: PlaceType.Neighborhood,
-				tags: { some: { like } },
+				tags: { some: { like, weight: { gt: 10 } } },
 			},
 			select: { id: true, name: true, placeFormatted: true, tags: true },
 		});
