@@ -4,6 +4,7 @@ import "./globals.css";
 import { SearchHeader } from "@/components/SearchHeader";
 import { ThemeButton } from "@/components/ThemeButton";
 import { ExternalLink } from "@/components/external-link";
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import localFont from "next/font/local";
@@ -77,6 +78,7 @@ export default function RootLayout({
 						</div>
 					</footer>
 				</ThemeProvider>
+				<Analytics />
 			</body>
 		</html>
 	);
