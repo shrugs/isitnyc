@@ -6,7 +6,6 @@ import { LocationTags } from "./location-tags/loader";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 
-// TODO: make this match
 export function NeighborhoodListSkeleton() {
 	return (
 		<div className="flex flex-col gap-2">

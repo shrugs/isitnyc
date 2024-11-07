@@ -5,7 +5,6 @@ import type { ComponentProps } from "react";
 import MapComponent from "./map/MapComponent";
 import { NeighborhoodList } from "./neighborhood-list";
 
-// TODO: cache this page for at least a few seconds
 export async function CityPage({ city }: { city: Pick<Place, "id" | "name" | "placeFormatted"> }) {
 	const neighborhoodIds = await prisma.$queryRaw<{ id: string }[]>`
 		SELECT p.id
